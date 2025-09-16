@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Crop Recommendation</title>
+    <style>
+        body { font-family: Arial; background: #f0f8ff; padding: 20px; }
+        h1 { color: #2e8b57; }
+        input { width: 100px; padding: 5px; margin: 5px 0; }
+        button { background-color: #2e8b57; color: white; padding: 10px 20px; border: none; cursor: pointer; }
+        button:hover { background-color: #3cb371; }
+        #result { margin-top: 20px; background: #e6ffe6; padding: 15px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>🌾 Crop Recommendation</h1>
+    <p>Enter soil and climate values:</p>
+
+    <label>N (Nitrogen): </label><input id="N" type="number" placeholder="e.g. 120"><br>
+    <label>P (Phosphorous): </label><input id="P" type="number" placeholder="e.g. 90"><br>
+    <label>K (Potassium): </label><input id="K" type="number" placeholder="e.g. 80"><br>
+    <label>Temperature (°C): </label><input id="temperature" type="number" placeholder="e.g. 25"><br>
+    <label>Humidity (%): </label><input id="humidity" type="number" placeholder="e.g. 70"><br>
+    <label>pH: </label><input id="ph" type="number" placeholder="e.g. 6"><br>
+    <label>Rainfall (mm): </label><input id="rainfall" type="number" placeholder="e.g. 100"><br>
+
+    <button onclick="getCrops()">Get Recommended Crops</button>
+
+    <div id="result"></div>
+
+    <script>
+        async function getCrops() {
+            let N = document.getElementById("N").value;
+            let P = document.getElementById("P").value;
+            let K = document.getElementById("K").value;
+            let temperature = document.getElementById("temperature").value;
+            let humidity = document.getElementById("humidity").value;
+            let ph = document.getElementById("ph").value;
+            let rainfall = document.getElementById("rainfall").value;
+
+            let query = [];
+            if(N) query.push(`N=${N}`);
+            if(P) query.push(`P=${P}`);
+            if(K) query.push(`K=${K}`);
+            if(temperature) query.push(`temperature=${temperature}`);
+            if(humidity) query.push(`humidity=${humidity}`);
+            if(ph) query.push(`ph=${ph}`);
+            if(rainfall) query.push(`rainfall=${rainfall}`);
+
+            let url = `http://127.0.0.1:8000/suggest?${query.join("&")}`;
+
+            try {
+                let response = await fetch(url);
+                let data = await response.json();
+                let resultDiv = document.getElementById("result");
+                resultDiv.innerHTML = `<h3>Recommended Crops:</h3><ul>` + 
+                    data.recommended_crops.map(c => `<li>${c}</li>`).join("") + `</ul>`;
+            } catch (error) {
+                alert("Error fetching crops. Make sure FastAPI is running.");
+                console.error(error);
+            }
+        }
+    </script>
+</body>
+</html>
