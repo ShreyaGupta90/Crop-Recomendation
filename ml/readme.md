@@ -1,4 +1,4 @@
-# Crop Recommendation System - DOCUMENTATION
+# Crop Recommendation System - Documentation
 
 This document provides a complete guide for the Crop Recommendation system, including input feature units, statistics, crop preferences, and seasonal crop guidance.
 
