@@ -1,4 +1,4 @@
-.,mm
+
 # Crop Recommendation System 
 
 
