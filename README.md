@@ -1,7 +1,7 @@
 
   # 🌾 Crop Recommendation System using Machine Learning + FastAPI
 
-  Hello everyone, hope you're all doing great! 🌼  
+
   This project predicts the **best crop to cultivate** based on environmental and soil parameters — and provides predictions through a **FastAPI web interface**.
 
   ---
